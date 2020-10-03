@@ -1,0 +1,14 @@
+Source: openmediavault-elfinder
+Section: net
+XB-Plugin-Section: sharing
+Priority: optional
+Maintainer: OpenMediaVault Plugin Developers <plugins@omv-extras.org>
+Build-Depends: debhelper (>> 9 )
+Standards-Version: 3.9.3
+Homepage: http://omv-extras.org/
+
+Package: openmediavault-elfinder
+Architecture: all
+Depends: ${misc:Depends}, openmediavault (>= 1.0.7)
+Description: OpenMediaVault elFinder plugin
+ installs elFinder and adds link in the OpenMediaVault web interface.

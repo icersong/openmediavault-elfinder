@@ -1,0 +1,36 @@
+#!/bin/sh
+
+set -e
+
+. /etc/default/openmediavault
+. /usr/share/openmediavault/scripts/helper-functions
+
+ELFINDER_POOL_CONF="/etc/php5/fpm/pool.d/openmediavault-elfinder-site.conf"
+ELFINDER_SITE_CONF="/etc/nginx/openmediavault-webgui.d/openmediavault-elfinder-site.conf"
+
+case "$1" in
+    purge|remove)
+        rm -rf /usr/share/elfinder
+
+        if [ -e "${ELFINDER_SITE_CONF}" ]; then
+            rm -f ${ELFINDER_SITE_CONF}
+        fi
+
+        if [ -e "${ELFINDER_POOL_CONF}" ]; then
+            rm -f ${ELFINDER_POOL_CONF}
+        fi
+
+        service php5-fpm reload
+        service nginx reload
+    ;;
+
+    upgrade|failed-upgrade|abort-install|abort-upgrade|disappear)
+    ;;
+
+    *)
+        echo "postrm called with unknown argument \`$1'" >&2
+        exit 1
+    ;;
+esac
+
+exit 0
