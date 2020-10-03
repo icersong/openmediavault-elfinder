@@ -24,8 +24,8 @@ set -e
 . /etc/default/openmediavault
 . /usr/share/openmediavault/scripts/helper-functions
 
-FILENAME="elfinder_2.1.9.tar.gz"
-LINK="http://omv-extras.org/${FILENAME}"
+FILENAME="master.zip"
+LINK="https://github.com/icersong/elFinder/archive/${FILENAME}"
 FILE="/tmp/${FILENAME}"
 INSTALL_DIR="/usr/share/elfinder"
 CONFIG_FILENAME=".htusers.php"
@@ -57,7 +57,8 @@ case "$1" in
         fi
 
         wget ${LINK} -O ${FILE}
-        tar xzf ${FILE} -C ${INSTALL_DIR}
+        # tar xzf ${FILE} -C ${INSTALL_DIR}
+        unzip ${FILE} -d ${INSTALL_DIR}
         rm -f ${FILE}
 
         if [ -f "${SAVED_CONFIG}" ]; then
