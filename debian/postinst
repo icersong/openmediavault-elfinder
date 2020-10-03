@@ -24,7 +24,7 @@ set -e
 . /etc/default/openmediavault
 . /usr/share/openmediavault/scripts/helper-functions
 
-FILENAME="master.zip"
+FILENAME="elFinder-master.zip"
 LINK="https://github.com/icersong/elFinder/archive/${FILENAME}"
 FILE="/tmp/${FILENAME}"
 INSTALL_DIR="/usr/share/elfinder"
