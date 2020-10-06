@@ -30,23 +30,64 @@ fi
 
 cat <<EOF > "${ELFINDER_POOL_CONF}"
 [openmediavault-elfinder]
+user = www-data
+group = www-data
+
 listen = /run/php/php7.3-fpm-openmediavault-elfinder.sock
 listen.owner = www-data
 listen.group = www-data
 listen.mode = 0600
 
-user = ${USERNAME}
-group = users
+pm = ondemand
+pm.max_children = 9
+pm.process_idle_timeout = 10s
 
-pm = dynamic
-pm.max_children = 5
-pm.start_servers = 2
-pm.min_spare_servers = 1
-pm.max_spare_servers = 3
+chdir = /
 
-php_value[post_max_size] = 2000M
-php_value[upload_max_filesize] = 2000M
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; openmediavault php.ini settings ;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+; Paths and Directories
+php_value[include_path] = ".:/usr/share/elfinder"
+
+; Pam Authentication Support (see /etc/pam.d)
+php_value[pam.servicename] = "openmediavault-elfinder";
+
+; Maximum allowed size for uploaded files.
+; http://php.net/upload-max-filesize
+php_value[upload_max_filesize] = 999M
+
+; Maximum size of POST data that PHP will accept.
+; http://php.net/post-max-size
+php_value[post_max_size] = 999M
+
+; Do not expose to the world that PHP is installed on the server.
+; http://php.net/expose-php
+php_value[expose_php] = Off
+
+; Name of the session (used as cookie name).
+; http://php.net/session.name
+php_value[session.name] = X-OPENMEDIAVAULT-SESSIONID
+
+; Whether or not to add the httpOnly flag to the cookie, which makes it
+; inaccessible to browser scripting languages such as JavaScript.
+; http://php.net/session.cookie-httponly
+php_value[session.cookie_httponly] = On
+
+; After this number of seconds, stored data will be seen as 'garbage' and
+; cleaned up by the garbage collection process.
+; http://php.net/session.gc-maxlifetime
+php_value[session.gc_maxlifetime] = 86400
+
+; Default timeout for socket based streams (seconds)
+; http://php.net/default-socket-timeout
+php_value[default_socket_timeout] = 90
+
+; Maximum execution time of each script, in seconds
+; http://php.net/max-execution-time
+; Note: This directive is hardcoded to 0 for the CLI SAPI
+php_value[max_execution_time] = 90
 EOF
 
 exit 0
