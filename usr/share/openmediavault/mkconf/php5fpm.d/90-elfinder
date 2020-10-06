@@ -21,7 +21,7 @@ set -e
 . /usr/share/openmediavault/scripts/helper-functions
 
 PHP_FPM_POOL_DIR=/etc/php/7.3/fpm/pool.d
-ELFINDER_POOL_CONF="${PHP_FPM_POOL_DIR}/openmediavault-elfinder-site.conf"
+ELFINDER_POOL_CONF="${PHP_FPM_POOL_DIR}/openmediavault-elfinder.conf"
 USERNAME="elfinder"
 
 if [ -e "${ELFINDER_POOL_CONF}" ]; then
