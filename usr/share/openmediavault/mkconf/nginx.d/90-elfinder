@@ -31,27 +31,16 @@ location /elfinder/ {
     alias /usr/share/elfinder/;
     index index.html;
     location ~ \.php$ {
-        fastcgi_split_path_info ^(.+\.php)(/.+)$;
-        fastcgi_pass unix:/var/run/php5-fpm-openmediavault-elfinder.sock;
         fastcgi_index index.php;
+        fastcgi_pass unix:/run/php/php7.3-fpm-openmediavault-elfinder.sock;
         include fastcgi_params;
+        fastcgi_param SCRIPT_FILENAME /usr/share$fastcgi_script_name;
     }
     location = /elfinder/favicon.ico {
         log_not_found off;
         access_log off;
     }
-    location = /elfinder/robots.txt {
-        allow all;
-        log_not_found off;
-        access_log off;
-    }
-    location /elfinder/ {
-        try_files \$uri \$uri/ /elfinder/php/index.php?\$args;
-    }
     location ~ /elfinder/\. {
-        deny all;
-    }
-    location ~* /elfinder/(?:config)/.*\.php$ {
         deny all;
     }
     location ~* /elfinder/\.(js|css|png|jpg|jpeg|gif|ico)$ {

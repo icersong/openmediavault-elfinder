@@ -20,7 +20,7 @@ set -e
 . /etc/default/openmediavault
 . /usr/share/openmediavault/scripts/helper-functions
 
-PHP_FPM_POOL_DIR=/etc/php5/fpm/pool.d
+PHP_FPM_POOL_DIR=/etc/php/7.3/fpm/pool.d
 ELFINDER_POOL_CONF="${PHP_FPM_POOL_DIR}/openmediavault-elfinder-site.conf"
 USERNAME="elfinder"
 
@@ -30,7 +30,7 @@ fi
 
 cat <<EOF > "${ELFINDER_POOL_CONF}"
 [openmediavault-elfinder]
-listen = /var/run/php5-fpm-openmediavault-elfinder.sock
+listen = /run/php/php7.3-fpm-openmediavault-elfinder.sock
 listen.owner = www-data
 listen.group = www-data
 listen.mode = 0600
