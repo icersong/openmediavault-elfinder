@@ -31,7 +31,7 @@ location /elfinder/ {
     alias /usr/share/elfinder/;
     index index.html;
     location ~ \.php$ {
-        fastcgi_index index.php;
+        # fastcgi_index index.php;
         fastcgi_pass unix:/run/php/php7.3-fpm-openmediavault-elfinder.sock;
         include fastcgi_params;
         fastcgi_param SCRIPT_FILENAME /usr/share\$fastcgi_script_name;
