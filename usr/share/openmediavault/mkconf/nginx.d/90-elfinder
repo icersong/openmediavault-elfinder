@@ -35,11 +35,11 @@ location /elfinder/ {
         fastcgi_pass unix:/run/php/php7.3-fpm-openmediavault-elfinder.sock;
         include fastcgi_params;
         # fastcgi_param SCRIPT_FILENAME /usr/share\$fastcgi_script_name;
-        set $real_script '';
-        if ( $fastcgi_script_name ~ /elfinder/php/(.*) ){
-            set $real_script $1;
+        set \$real_script '';
+        if ( \$fastcgi_script_name ~ /elfinder/php/(.*) ){
+            set \$real_script \$1;
         }
-        fastcgi_param SCRIPT_FILENAME /usr/share/elfinder/php/$real_script;
+        fastcgi_param SCRIPT_FILENAME /usr/share/elfinder/php/\$real_script;
     }
     location = /elfinder/favicon.ico {
         log_not_found off;
