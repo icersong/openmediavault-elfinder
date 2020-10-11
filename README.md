@@ -2,7 +2,6 @@ elFinder plugin for OpenMediaVault
 
 ## deploy elfinder
 
-    $ cd /usr/share
     $ wget https://github.com/icersong/elFinder/archive/master.zip -O elfinder.zip
     $ unzip elfinder.zip
     $ mv elFinder-master /usr/share/elfinder
@@ -15,6 +14,7 @@ elFinder plugin for OpenMediaVault
 
     $ wget https://github.com/icersong/openmediavault-elfinder/archive/master.zip \
         -O openmediavault-elfinder.zip
+    $ unzip openmediavault-elfinder.zip
     $ cd openmediavault-elfinder-master
     $ mkdir /var/www/openmediavault/js/omv/module/admin/service/elfinder
     $ cp var/www/openmediavault/js/omv/module/admin/service/elfinder/Elfinder.js \
