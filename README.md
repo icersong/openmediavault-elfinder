@@ -22,8 +22,8 @@ elFinder plugin for OpenMediaVault
     $ cp var/www/openmediavault/images/elfinder.* /var/www/openmediavault/images/
     $ ./usr/share/openmediavault/mkconf/nginx.d/90-elfinder
     $ ./usr/share/openmediavault/mkconf/php5fpm.d/90-elfinder
-    $ systemctl restart php7.3
-    $ systemctl restart nginx
+    $ systemctl restart php7.3-fpm.service
+    $ systemctl restart nginx.service
 
 ## clean omv cache
 
