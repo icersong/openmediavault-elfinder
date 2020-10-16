@@ -21,6 +21,7 @@ $ mkdir /var/www/openmediavault/js/omv/module/admin/service/elfinder
 $ cp var/www/openmediavault/js/omv/module/admin/service/elfinder/Elfinder.js \
     /var/www/openmediavault/js/omv/module/admin/service/elfinder/
 $ cp var/www/openmediavault/images/elfinder.* /var/www/openmediavault/images/
+$ cp -r usr/share/openmediavault/locale/* /usr/share/openmediavault/locale/
 $ ./usr/share/openmediavault/mkconf/nginx.d/90-elfinder
 $ ./usr/share/openmediavault/mkconf/php5fpm.d/90-elfinder
 $ systemctl restart php7.3-fpm.service
@@ -35,10 +36,4 @@ $ systemctl restart nginx.service
 $ sudo passwd root
 new password: pi
 verify password: pi
-```
-
-## clean omv cache
-```
-$ su -
-$ source /usr/share/openmediavault/scripts/helper-functions && omv_purge_internal_cache
 ```
