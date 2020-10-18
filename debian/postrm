@@ -1,11 +1,31 @@
 #!/bin/sh
+#
+# @license   http://www.gnu.org/licenses/gpl.html GPL Version 3
+# @author    Volker Theile <volker.theile@openmediavault.org>
+# @author    OpenMediaVault Plugin Developers <plugins@omv-extras.org>
+# @copyright Copyright (c) 2009-2013 Volker Theile
+# @copyright Copyright (c) 2013-2020 OpenMediaVault Plugin Developers
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 set -e
 
 . /etc/default/openmediavault
 . /usr/share/openmediavault/scripts/helper-functions
 
-ELFINDER_POOL_CONF="/etc/php5/fpm/pool.d/openmediavault-elfinder-site.conf"
+PHP_FPM_POOL_DIR=/etc/php/7.3/fpm/pool.d
+ELFINDER_POOL_CONF="${PHP_FPM_POOL_DIR}/openmediavault-elfinder.conf"
 ELFINDER_SITE_CONF="/etc/nginx/openmediavault-webgui.d/openmediavault-elfinder-site.conf"
 
 case "$1" in
@@ -22,6 +42,7 @@ case "$1" in
 
         service php5-fpm reload
         service nginx reload
+        omv_purge_internal_cache
     ;;
 
     upgrade|failed-upgrade|abort-install|abort-upgrade|disappear)
