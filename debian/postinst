@@ -27,8 +27,9 @@ set -e
 FILENAME="master"
 FULLNAME="${FILENAME}.zip"
 LINK="https://github.com/icersong/elFinder/archive/${FULLNAME}"
-FILE="/tmp/${FULLNAME}"
-FOLDER="/tmp/elfinder-master"
+TEMP="/tmp"
+FILE="${TEMP}/${FULLNAME}"
+FOLDER="elFinder-master"
 INSTALL_DIR="/usr/share/elfinder"
 WORKING_DIR="/media"
 CONFIG_FILENAME=".htusers.php"
@@ -53,20 +54,23 @@ case "$1" in
             cp "${CONFIG_FILE}" "${SAVED_CONFIG}"
         fi
 
-        rm -rf ${INSTALL_DIR}
-        mkdir -p ${INSTALL_DIR}
         wget ${LINK} -O ${FILE}
-        unzip ${FILE}
-        mv elFinder-master ${INSTALL_DIR}
+        rm -rf ${TEMP}/${FOLDER}
+        unzip -o ${FILE} -d ${TEMP}/
+        rm -rf ${INSTALL_DIR}
+        #mkdir -p ${INSTALL_DIR}
+        #cp -rf ${FOLDER}/* ${INSTALL_DIR}/
+        mv -f ${TEMP}/${FOLDER} ${INSTALL_DIR}
         cp -f ${INSTALL_DIR}/php/connector.minimal.php-dist \
           ${INSTALL_DIR}/php/connector.minimal.php
         ln -s ${WORKING_DIR} ${INSTALL_DIR}/files
-        mkdir ${WORKING_DIR}/.trash
-        mkdir ${WORKING_DIR}/.trash/.tmb
-        chown -R ${USERNAME}:${GROUPNAME} ${WORKING_DIR}/.trash
-        if [ -f "${FILE}" ]; then
-            rm -f ${FILE}
+        if [ ! -d "${WORKING_DIR}/.trash" ]; then
+            mkdir ${WORKING_DIR}/.trash
+            mkdir ${WORKING_DIR}/.trash/.tmb
+            chown -R ${USERNAME}:${GROUPNAME} ${WORKING_DIR}/.trash
         fi
+        rm -f ${FILE}
+        rm -f ${TEMP}/${FOLDER}
 
         # restore config file or new config file
         if [ -f "${SAVED_CONFIG}" ]; then
@@ -78,13 +82,12 @@ case "$1" in
 # EOF
 #         fi
 
-        # ./usr/share/openmediavault/mkconf/nginx.d/90-elfinder
-        # ./usr/share/openmediavault/mkconf/php7.3-fpm.d/90-elfinder
-
-        omv-mkconf php7.3-fpm
+        #omv-mkconf php7.3-fpm
+        /usr/share/openmediavault/mkconf/php7.3-fpm.d/90-elfinder
         service php7.3-fpm reload
 
-        omv-mkconf nginx
+        #omv-mkconf nginx
+        /usr/share/openmediavault/mkconf/nginx.d/90-elfinder
         service nginx reload
 
         echo "Default username is:  admin"

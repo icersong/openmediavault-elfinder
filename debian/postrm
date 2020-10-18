@@ -40,9 +40,9 @@ case "$1" in
             rm -f ${ELFINDER_POOL_CONF}
         fi
 
-        service php5-fpm reload
+        service php7.3-fpm reload
         service nginx reload
-        omv_purge_internal_cache
+        #omv_purge_internal_cache
     ;;
 
     upgrade|failed-upgrade|abort-install|abort-upgrade|disappear)
