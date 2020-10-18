@@ -94,11 +94,10 @@ case "$1" in
         echo "Default password is:  openmediavault"
 
         # Activate package triggers.
-        dpkg-trigger update-fixperms
-        dpkg-trigger update-locale
-
         # omv_purge_internal_cache
         # omv_install_locale
+        dpkg-trigger update-fixperms
+        dpkg-trigger update-locale
 
         # Initialize and migrate configuration database.
         echo "Updating configuration database ..."
