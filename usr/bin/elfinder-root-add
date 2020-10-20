@@ -1,0 +1,49 @@
+#!/bin/bash
+
+LOG_FILE="/tmp/elfinder.config.log"
+
+if [ -z "$1" ]; then
+    echo "$(date) [H] usage $0 <folder> [alias [trash-no]]" >> ${LOG_FILE} 
+    exit 1
+fi
+
+TRASH_NO=$3
+ALIAS="$2"
+FOLDER="$1"
+DATA_ROOT="/srv"
+CONF_ROOT="/usr/share/elfinder/php/configs"
+
+if [ -z "$ALIAS" ]; then
+  ALIAS="$FOLDER"
+fi
+if [ -z "$TRASH_NO" ]; then
+  TRASH_NO="0"
+fi
+
+data_folder="$DATA_ROOT/$FOLDER"
+conf_file="$CONF_ROOT/$FOLDER.php"
+
+if [ -d ${data_folder} ]; then
+    echo "$(date) [S] add ${ALIAS} -> ${data_folder}" >> ${LOG_FILE}
+    # sed "s/<ALIAS>/${ALIAS}/g; s/<FOLDER>/${FOLDER}/g; s/<TRASH_NO>/${TRASH_NO}/g" $CONF_ROOT/root.config.tpl > ${conf_file}
+    cat > $conf_file << EOF 
+<?php
+    error_reporting(0); // Set E_ALL for debuging
+    array_push(\$opts['roots'], array(
+    'alias'         => '${ALIAS}',
+    'driver'        => 'LocalFileSystem',
+    'path'          => '${data_folder}/',
+    'URL'           => dirname(\$_SERVER['PHP_SELF']) . '/../data/${FOLDER}',
+    //'trashHash'     => 't${TRASH_NO}_Lw',
+    'winHashFix'    => DIRECTORY_SEPARATOR !== '/',
+    'uploadDeny'    => array('all'),
+    'uploadAllow'   => array('image/x-ms-bmp', 'image/gif', 'image/jpeg', 'image/png', 'image/x-icon', 'text/plain'),
+    'uploadOrder'   => array('deny', 'allow'),
+    'accessControl' => 'access'
+));
+EOF
+    echo "$(date) [S] add ${CONF_ROOT}/${FOLDER}.php success." >> ${LOG_FILE}
+else
+    echo "$(date) [E] ${DATA_ROOT}/${FOLDER} not exists." >> ${LOG_FILE}
+    echo "$(date) [E] add ${ALIAS} -> ${DATA_ROOT}/${FOLDER} Fails!" >> ${LOG_FILE}
+fi

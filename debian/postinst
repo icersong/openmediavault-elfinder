@@ -31,7 +31,7 @@ TEMP="/tmp"
 FILE="${TEMP}/${FULLNAME}"
 FOLDER="elFinder-master"
 INSTALL_DIR="/usr/share/elfinder"
-WORKING_DIR="/media"
+WORKING_DIR="/srv"
 CONFIG_FILENAME=".htusers.php"
 CONFIG_FILE="${INSTALL_DIR}/config/${CONFIG_FILENAME}"
 SAVED_CONFIG="/tmp/${CONFIG_FILENAME}"
@@ -61,9 +61,12 @@ case "$1" in
         #mkdir -p ${INSTALL_DIR}
         #cp -rf ${FOLDER}/* ${INSTALL_DIR}/
         mv -f ${TEMP}/${FOLDER} ${INSTALL_DIR}
-        cp -f ${INSTALL_DIR}/php/connector.minimal.php-dist \
+        cp -f ${INSTALL_DIR}/php/connector.minimal.php-lite \
           ${INSTALL_DIR}/php/connector.minimal.php
         ln -s ${WORKING_DIR} ${INSTALL_DIR}/files
+        if [ ! -d ${INSTALL_DIR}/php/configs ]; then
+            mkdir "${INSTALL_DIR}/php/configs"
+        fi
         if [ ! -d "${WORKING_DIR}/.trash" ]; then
             mkdir ${WORKING_DIR}/.trash
             mkdir ${WORKING_DIR}/.trash/.tmb

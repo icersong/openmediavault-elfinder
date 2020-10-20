@@ -2,7 +2,7 @@
 wget https://github.com/icersong/elFinder/archive/master.zip -O elfinder.zip
 unzip elfinder.zip
 mv elFinder-master /usr/share/elfinder
-cp -f /usr/share/elfinder/php/connector.minimal.php-dist \
+cp -f /usr/share/elfinder/php/connector.minimal.php-lite \
   /usr/share/elfinder/php/connector.minimal.php
 ln -s /media /usr/share/elfinder/files
 mkdir /media/.trash

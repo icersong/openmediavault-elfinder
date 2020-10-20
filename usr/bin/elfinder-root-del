@@ -1,0 +1,17 @@
+#!/bin/bash
+
+if [ -z "$1" ]; then
+    echo "$(date) [H] usage $0 <folder>" >> /tmp/elfinder.config.log
+    exit 1
+fi
+
+FOLDER="$1"
+CONF_ROOT="/usr/share/elfinder/php/configs"
+conf_file="$CONF_ROOT/$FOLDER.php"
+
+if [ -f $conf_file ]; then
+  rm -f $conf_file
+  echo "$(date) [S] remove $conf_file success." >> /tmp/elfinder.config.log
+else
+  echo "$(date) [F] $conf_file not exists." >> /tmp/elfinder.config.log
+fi
