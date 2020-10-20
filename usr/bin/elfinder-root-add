@@ -28,19 +28,21 @@ if [ -d ${data_folder} ]; then
     # sed "s/<ALIAS>/${ALIAS}/g; s/<FOLDER>/${FOLDER}/g; s/<TRASH_NO>/${TRASH_NO}/g" $CONF_ROOT/root.config.tpl > ${conf_file}
     cat > $conf_file << EOF 
 <?php
-    error_reporting(0); // Set E_ALL for debuging
-    array_push(\$opts['roots'], array(
+error_reporting(0); // Set E_ALL for debuging
+if ('${data_folder}/') {
+  array_push(\$opts['roots'], array(
     'alias'         => '${ALIAS}',
     'driver'        => 'LocalFileSystem',
     'path'          => '${data_folder}/',
-    'URL'           => dirname(\$_SERVER['PHP_SELF']) . '/../data/${FOLDER}',
+    'URL'           => dirname(\$_SERVER['PHP_SELF']) . '/../files/${FOLDER}',
     //'trashHash'     => 't${TRASH_NO}_Lw',
     'winHashFix'    => DIRECTORY_SEPARATOR !== '/',
     'uploadDeny'    => array('all'),
     'uploadAllow'   => array('image/x-ms-bmp', 'image/gif', 'image/jpeg', 'image/png', 'image/x-icon', 'text/plain'),
     'uploadOrder'   => array('deny', 'allow'),
     'accessControl' => 'access'
-));
+  ));
+}
 EOF
     echo "$(date) [S] add ${CONF_ROOT}/${FOLDER}.php success." >> ${LOG_FILE}
 else

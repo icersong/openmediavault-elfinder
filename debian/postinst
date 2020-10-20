@@ -64,8 +64,9 @@ case "$1" in
         cp -f ${INSTALL_DIR}/php/connector.minimal.php-lite \
           ${INSTALL_DIR}/php/connector.minimal.php
         ln -s ${WORKING_DIR} ${INSTALL_DIR}/files
-        if [ ! -d ${INSTALL_DIR}/php/configs ]; then
-            mkdir "${INSTALL_DIR}/php/configs"
+        if [ ! -d "${WORKING_DIR}/MyBox" ]; then
+            mkdir "${WORKING_DIR}/MyBox"
+            chown -R ${USERNAME}:${GROUPNAME} ${WORKING_DIR}/MyBox
         fi
         if [ ! -d "${WORKING_DIR}/.trash" ]; then
             mkdir ${WORKING_DIR}/.trash
